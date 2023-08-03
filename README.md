@@ -20,14 +20,10 @@ Acesse a pasta do projeto:
 - cd next-system
 
 2. Instale as dependências do projeto:
-- npm install
-# ou
-- yarn install
+- npm install ou yarn install
 
 3. Inicie o servidor de desenvolvimento:
-- npm run dev
-# ou
-- yarn dev
+- npm run dev ou yarn dev
 
 A aplicação estará disponível no endereço http://localhost:3000.
 
