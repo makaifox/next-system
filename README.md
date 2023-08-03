@@ -1,38 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next-System Frontend
 
-## Getting Started
+O Next-System é um projeto de frontend desenvolvido utilizando o framework Next.js, baseado em React. Ele é uma aplicação para gerenciar categorias e realizar operações CRUD (criar, ler, atualizar e deletar) em uma lista de categorias.
 
-First, run the development server:
+## Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- Visualizar a lista de categorias cadastradas.
+- Adicionar novas categorias.
+- Editar o nome de uma categoria existente.
+- Excluir uma categoria da lista.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalação
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Para executar o projeto em seu ambiente local, siga os passos abaixo:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Clone este repositório para o seu computador:
+- git clone https://github.com/seu-usuario/next-system.git
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Acesse a pasta do projeto:
+- cd next-system
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. Instale as dependências do projeto:
+- npm install
+# ou
+- yarn install
 
-## Learn More
+3. Inicie o servidor de desenvolvimento:
+- npm run dev
+# ou
+- yarn dev
 
-To learn more about Next.js, take a look at the following resources:
+A aplicação estará disponível no endereço http://localhost:3000.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estrutura do Projeto
+O projeto possui a seguinte estrutura de diretórios:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+components: Contém os componentes reutilizáveis da aplicação.
+pages: Contém as páginas da aplicação, cada arquivo aqui representa uma rota acessível pelo usuário.
+styles: Contém arquivos de estilos globais e de componentes.
+api: Contém arquivos para lidar com as chamadas de API.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Tecnologias Utilizadas
+- React
+- Next.js
+- TypeScript
+- CSS Modules
+- Axios (para fazer chamadas à API)
