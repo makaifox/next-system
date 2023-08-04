@@ -40,8 +40,5 @@ api: Contém arquivos para lidar com as chamadas de API.
 - Next.js
 - TypeScript
 - CSS Modules
-<<<<<<< HEAD
 - Bootstrap
-=======
->>>>>>> 3c4d46e0336996eaf4e624a885464c642f4dc870
 - Axios (para fazer chamadas à API)
