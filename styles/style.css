@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
   background-color: white;
 }
@@ -11,7 +12,6 @@ body {
 .navbar-custom .nav-link {
   color: #FFFFFF;
 }
-
 
 /* Table */
 .table-custom thead {
@@ -27,7 +27,6 @@ body {
   color: #000000;
 }
 
-
 /* Modals */
 .modal-header {
   background-color: #007BFF;
@@ -39,7 +38,7 @@ body {
   color: #000000;
 }
 
-
+/* Page Wrapper */
 .page-wrapper {
   display: flex;
   align-items: center;
@@ -47,11 +46,13 @@ body {
   height: 100vh;
 }
 
+/* Col */
 .Col {
   text-align: center;
   margin-top: 20px;
 }
 
+/* Index Page Specific Styles */
 .index-title {
   margin: 40px 0;
 }
