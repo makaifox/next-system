@@ -29,30 +29,26 @@ const CategoryEditModal: React.FC<CategoryEditModalProps> = ({ category, onSave,
   };
 
   return (
-<div
-      className="modal show"
-      style={{ display: 'block', position: 'initial' }}
-      aria-labelledby="contained-modal-title-vcenter"
-      
-    >
-      <Modal.Dialog>
-        <Modal.Header>
-          <Modal.Title>Editar Categoria</Modal.Title>
-        </Modal.Header>
+    <Modal show={true} onHide={onCancel}>
+      <Modal.Header className="modal-header">
+        <Modal.Title>Editar Categoria</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Body>
+      <Modal.Body className="modal-body">
         {editedCategory && (
-        <>
-          <input type="text" value={editedCategory.nome} onChange={handleChange} />
-          <Modal.Footer>
-          <Button onClick={handleSave}>Salvar</Button>
-          <Button onClick={onCancel}>Cancelar</Button>
-          </Modal.Footer>
-        </>
-      )}
-        </Modal.Body>
-      </Modal.Dialog>
-    </div>
+          <>
+            <input type="text" value={editedCategory.nome} onChange={handleChange} />
+          </>
+        )}
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onCancel}>
+          Cancelar
+        </Button>
+        <Button variant="primary" onClick={handleSave}>Salvar</Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

@@ -39,17 +39,22 @@ const HomePage: React.FC = () => {
       <div>
         <Navbartab />
         <Container>
-          <Row>
-            <Col>
+          <Row className='d-flex justify-content-center'>
+            <Col xs="12" className='d-flex justify-content-center index-title'>
               <h1>categorias de clientes</h1>
+            </Col>
+            <Col xs="12" className='d-flex justify-content-center search'>
+              <br/>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Buscar categoria..."
-              />
+                />
+                </Col>
+                <Col xs="10">
               <CategoryList categories={filteredCategories} />
-            </Col>
+                </Col>
           </Row>
         </Container>
       </div>

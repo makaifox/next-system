@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import Link from 'next/link'; // Importe o Link do next/link
+import { useRouter } from 'next/router';
 import CategoryEditModal from './CategoryEditModal';
 import CategoryDeleteModal from './CategoryDeleteModal';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row'; // Import Row from 'react-bootstrap', not 'react-bootstrap/esm/Row'
-import Col from 'react-bootstrap/Col'; // Import Col from 'react-bootstrap', not 'react-bootstrap/esm/Col'
 
 interface Category {
   id: string;
@@ -14,9 +12,12 @@ interface Category {
 
 interface CategoryListProps {
   categories: Category[];
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>; // Add this prop to update categories
 }
 
-const CategoryList: React.FC<CategoryListProps> = ({ categories }) => {
+const CategoryList: React.FC<CategoryListProps> = ({ categories, setCategories }) => {
+  const router = useRouter();
+
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
@@ -28,10 +29,23 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories }) => {
   };
 
   const handleEditSave = (editedCategory: Category) => {
-    // Lógica para salvar a edição no backend
-    // Atualize a categoria no estado local ou refaça a busca no backend
-    // Para atualizar a lista de categorias após a edição
-    setEditModalOpen(false);
+    fetch(`http://localhost:5000/api/categories/${editedCategory.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editedCategory),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories((prevCategories) =>
+          prevCategories.map((cat) => (cat.id === editedCategory.id ? editedCategory : cat))
+        );
+        setEditModalOpen(false);
+      })
+      .catch((error) => {
+        console.error('Erro ao atualizar a categoria:', error);
+      });
   };
 
   const handleEditCancel = () => {
@@ -44,44 +58,47 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories }) => {
   };
 
   const handleDeleteConfirm = () => {
-    // Lógica para deletar a categoria no backend
-    // Remova a categoria do estado local ou refaça a busca no backend
-    // Para atualizar a lista de categorias após a exclusão
-    setDeleteModalOpen(false);
+    if (categoryToDelete) {
+      fetch(`http://localhost:5000/api/categories/${categoryToDelete.id}`, {
+        method: 'DELETE',
+      })
+        .then(() => {
+          setCategories((prevCategories) =>
+            prevCategories.filter((cat) => cat.id !== categoryToDelete.id)
+          );
+          setDeleteModalOpen(false);
+        })
+        .catch((error) => {
+          console.error('Erro ao deletar a categoria:', error);
+        });
+    }
   };
 
   const handleDeleteCancel = () => {
     setDeleteModalOpen(false);
   };
 
+  const isCategoriesPage = router.pathname === '/categories';
+
   return (
     <div>
-      <Row>
-        <Col> <h2>Lista de Categorias de Cliente</h2></Col>
-      </Row>
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
             <th>Nome</th>
+            {isCategoriesPage && <th className='actiontab'>Ações</th>}
           </tr>
         </thead>
         <tbody>
           {categories.map((category) => (
             <tr key={category.id}>
-              <td>
-                <Row>
-                  <Col>{category.nome}</Col>
-                  <Col>
-                    <Button onClick={() => handleEdit(category)}>Editar</Button>
-                    <Link href={`/categories/${category.id}`} passHref>
-                      <Button as="a" variant="secondary">Editar</Button>
-                    </Link>
-                  </Col>
-                  <Col>
-                    <Button onClick={() => handleDelete(category)}>Deletar</Button>
-                  </Col>
-                </Row>
-              </td>
+              <td>{category.nome}</td>
+              {isCategoriesPage && (
+                <td>
+                  <Button className="tablebutton" onClick={() => handleEdit(category)}>Editar</Button>
+                  <Button className="tablebutton" variant="danger" onClick={() => handleDelete(category)}>Deletar</Button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
@@ -96,7 +113,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories }) => {
       {deleteModalOpen && (
         <CategoryDeleteModal
           category={categoryToDelete}
-          onConfirm={handleDeleteConfirm}
+          onDelete={handleDeleteConfirm}
           onCancel={handleDeleteCancel}
         />
       )}

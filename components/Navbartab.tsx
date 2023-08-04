@@ -1,24 +1,19 @@
-import Link from 'next/link';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
+import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
 
-const Navbartab = () => {
+const Navbartab: React.FC = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="dark">
+    <Navbar expand="lg" className="navbar-custom">
       <Container>
-        <Link href="/" passHref>
-          <Navbar.Brand as="a">Next System</Navbar.Brand>
-        </Link>
+        <Navbar.Brand href="/">Next System</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link href="/" passHref>
-              <Nav.Link as="a">Início</Nav.Link>
-            </Link>
-            <Link href="/categories" passHref>
-              <Nav.Link as="a">Categoria Cliente</Nav.Link>
-            </Link>
+          <Nav className="ml-auto">
+            {/* Add your navigation links here as regular anchor tags */}
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/categories">Categories</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

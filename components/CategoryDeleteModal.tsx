@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 interface Category {
   id: string;
@@ -14,36 +14,27 @@ interface CategoryDeleteModalProps {
 }
 
 const CategoryDeleteModal: React.FC<CategoryDeleteModalProps> = ({ category, onDelete, onCancel }) => {
-  const handleDelete = () => {
-    if (category) {
-      onDelete();
-    }
-  };
+  if (!category) {
+    return null;
+  }
 
   return (
-
-<div
-      className="modal show"
-      style={{ display: 'block', position: 'initial' }}
-      aria-labelledby="contained-modal-title-vcenter"
-      
-    >
-      <Modal.Dialog>
-        <Modal.Header>
-          <Modal.Title>Confirmar Exclusão</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-        {category && (
-        <>
-          <p>Tem certeza que deseja excluir a categoria "{category.nome}"?</p>
-          <Button onClick={handleDelete}>Confirmar</Button>
-          <Button onClick={onCancel}>Cancelar</Button>
-        </>
-      )}
-        </Modal.Body>
-      </Modal.Dialog>
-    </div>
+    <Modal show={true} onHide={onCancel}>
+      <Modal.Header closeButton>
+        <Modal.Title>Deletar Categoria</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        Tem certeza que deseja deletar a categoria: <strong>{category.nome}</strong>?
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onCancel}>
+          Cancelar
+        </Button>
+        <Button variant="danger" onClick={onDelete}>
+          Deletar
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
