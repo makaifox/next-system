@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link'; // Importe o Link do next/link
 import CategoryEditModal from './CategoryEditModal';
 import CategoryDeleteModal from './CategoryDeleteModal';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row'; // Import Row from 'react-bootstrap', not 'react-bootstrap/esm/Row'
+import Col from 'react-bootstrap/Col'; // Import Col from 'react-bootstrap', not 'react-bootstrap/esm/Col'
 
 interface Category {
   id: string;
   nome: string;
 }
 
-const CategoryList: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+interface CategoryListProps {
+  categories: Category[];
+}
+
+const CategoryList: React.FC<CategoryListProps> = ({ categories }) => {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
   const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
-
-  useEffect(() => {
-    console.log('Fetching categories from backend...');
-    fetch('http://localhost:5000/api/categories')
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  }, []);
 
   const handleEdit = (category: Category) => {
     setCategoryToEdit(category);
@@ -53,33 +54,54 @@ const CategoryList: React.FC = () => {
     setDeleteModalOpen(false);
   };
 
-return (
-  <div>
-    <h2>Lista de Categorias de Cliente</h2>
-    <ul>
-      {categories.map((category) => (
-        <li key={category.id}>
-          {category.nome}
-          <button onClick={() => handleEdit(category)}>Editar</button>
-          <button onClick={() => handleDelete(category)}>Deletar</button>
-        </li>
-      ))}
-    </ul>
-    {editModalOpen && (
-      <CategoryEditModal
-        category={categoryToEdit}
-        onSave={handleEditSave}
-        onCancel={handleEditCancel}
-      />
-    )}
-    {deleteModalOpen && (
-      <CategoryDeleteModal
-        category={categoryToDelete}
-        onDelete={handleDeleteConfirm}
-        onCancel={handleDeleteCancel}
-      />
-    )}
-  </div>
-);
+  return (
+    <div>
+      <Row>
+        <Col> <h2>Lista de Categorias de Cliente</h2></Col>
+      </Row>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Nome</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((category) => (
+            <tr key={category.id}>
+              <td>
+                <Row>
+                  <Col>{category.nome}</Col>
+                  <Col>
+                    <Button onClick={() => handleEdit(category)}>Editar</Button>
+                    <Link href={`/categories/${category.id}`} passHref>
+                      <Button as="a" variant="secondary">Editar</Button>
+                    </Link>
+                  </Col>
+                  <Col>
+                    <Button onClick={() => handleDelete(category)}>Deletar</Button>
+                  </Col>
+                </Row>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      {editModalOpen && (
+        <CategoryEditModal
+          category={categoryToEdit}
+          onSave={handleEditSave}
+          onCancel={handleEditCancel}
+        />
+      )}
+      {deleteModalOpen && (
+        <CategoryDeleteModal
+          category={categoryToDelete}
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleDeleteCancel}
+        />
+      )}
+    </div>
+  );
 };
+
 export default CategoryList;

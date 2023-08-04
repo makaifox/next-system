@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 interface Category {
   id: string;
@@ -27,15 +29,29 @@ const CategoryEditModal: React.FC<CategoryEditModalProps> = ({ category, onSave,
   };
 
   return (
-    <div>
-      <h2>Editar Categoria</h2>
-      {editedCategory && (
+<div
+      className="modal show"
+      style={{ display: 'block', position: 'initial' }}
+      aria-labelledby="contained-modal-title-vcenter"
+      
+    >
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Editar Categoria</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+        {editedCategory && (
         <>
           <input type="text" value={editedCategory.nome} onChange={handleChange} />
-          <button onClick={handleSave}>Salvar</button>
-          <button onClick={onCancel}>Cancelar</button>
+          <Modal.Footer>
+          <Button onClick={handleSave}>Salvar</Button>
+          <Button onClick={onCancel}>Cancelar</Button>
+          </Modal.Footer>
         </>
       )}
+        </Modal.Body>
+      </Modal.Dialog>
     </div>
   );
 };

@@ -1,33 +1,23 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
 
 interface Category {
   nome: string;
 }
 
-const CategoryForm: React.FC = () => {
+interface CategoryFormProps {
+  onSubmit: (category: Category) => void;
+}
+
+const CategoryForm: React.FC<CategoryFormProps> = ({ onSubmit }) => {
   const [nome, setNome] = useState<string>('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newCategory: Category = { nome };
-
-    fetch('http://localhost:5000/api/categories', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newCategory),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // Lógica para atualizar a lista de categorias após o cadastro
-        console.log('Nova categoria cadastrada:', data);
-      })
-      .catch((error) => {
-        // Tratar erros, se necessário
-        console.error('Error:', error);
-      });
-
+    onSubmit(newCategory);
     setNome('');
   };
 
@@ -36,16 +26,20 @@ const CategoryForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={nome}
-        onChange={handleChange}
-        placeholder="Digite o nome da categoria"
-        required
-      />
-      <button type="submit">Adicionar</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <InputGroup className="mb-3">
+        <input
+          type="text"
+          value={nome}
+          onChange={handleChange}
+          placeholder="Digite o nome da categoria"
+          required
+        />
+        <Button type="submit" variant="outline-secondary" id="button-addon2">
+          Adicionar
+        </Button>
+      </InputGroup>
+    </Form>
   );
 };
 

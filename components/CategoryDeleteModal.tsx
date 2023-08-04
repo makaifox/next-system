@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 interface Category {
   id: string;
@@ -19,15 +21,28 @@ const CategoryDeleteModal: React.FC<CategoryDeleteModalProps> = ({ category, onD
   };
 
   return (
-    <div>
-      <h2>Confirmar Exclusão</h2>
-      {category && (
+
+<div
+      className="modal show"
+      style={{ display: 'block', position: 'initial' }}
+      aria-labelledby="contained-modal-title-vcenter"
+      
+    >
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Confirmar Exclusão</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+        {category && (
         <>
           <p>Tem certeza que deseja excluir a categoria "{category.nome}"?</p>
-          <button onClick={handleDelete}>Confirmar</button>
-          <button onClick={onCancel}>Cancelar</button>
+          <Button onClick={handleDelete}>Confirmar</Button>
+          <Button onClick={onCancel}>Cancelar</Button>
         </>
       )}
+        </Modal.Body>
+      </Modal.Dialog>
     </div>
   );
 };
